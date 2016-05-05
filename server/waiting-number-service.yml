@@ -1,0 +1,100 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Waiting number service
+  description: Manage your waiting numbers
+  version: "1.0.0"
+# the domain of the service
+host: localhost
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /waitingTickets/newTicket:
+    get:
+      summary: Get new waiting ticket
+      description: Request a new waiting ticket for a client.
+      responses:
+        201:
+          description: The new ticket
+          schema:
+            $ref: '#/definitions/WaitingTicket'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /waitingTickets/getNextWaiting:
+    get:
+      summary: Next client in line
+      description: Get the waiting ticket for the next waiting client.
+      responses:
+        200:
+          description: The ticket
+          schema:
+            $ref: '#/definitions/WaitingTicket'
+        404:
+          description: No client waiting
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+        - name: deskNumber
+          in: query
+          description: Your desk's number
+          required: true
+          type: integer
+          format: int32
+  /waitingTickets/{id}/:
+    put:
+      summary: Waiting ticket
+      description: Get the waiting ticket for the given id.
+      responses:
+        200:
+          description: The ticket
+          schema:
+            $ref: '#/definitions/WaitingTicket'
+        404:
+          description: Not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+        - name: id
+          in: path
+          description: ID of the waiting ticket
+          required: true
+          type: string
+        - name: waitingTicket
+          in: body
+          description: Updated waiting ticket
+          required: true
+          type:
+            $ref: '#/definitions/WaitingTicket'
+            
+definitions:
+  WaitingTicket:
+    type: object
+    properties:
+      callNumber:
+        type: integer
+        format: int32
+        description: Ticket number to display on the screen.
+      atDesk:
+        type: integer
+        format: int32
+        description: Desk that was assigned to this waiting ticket. Equals to 0 if the ticket wasn't dispached yet.
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
