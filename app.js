@@ -4,27 +4,28 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
-var waitingTicket = express.Router();
 var waitingTickets = [];
 var nextCallNumber = 1;
 
 var app = express();
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Get all waiting tickets
-waitingTicket.get('/', function(req, res, next) {
+app.get('/waitingTicket', function(req, res, next) {
   res.status(200);
-  res.end(waitingTickets);
+  res.json(waitingTickets);
 });
 
 // Request a new ticket
-waitingTicket.get('/newTicket', function(req, res, next) {
+app.get('/waitingTicket/newTicket', function(req, res, next) {
   var newTicket = {
     callNumber: nextCallNumber,
     deskNumber: 0
@@ -32,21 +33,25 @@ waitingTicket.get('/newTicket', function(req, res, next) {
   
   nextCallNumber += 1;
   
-  waitingTicket.push(newTicket);
+  waitingTickets.push(newTicket);
+  
+  // Insert the id also into the object
+  var lastId = waitingTickets.length - 1;
+  waitingTickets[lastId]['id'] = lastId;
   
   res.status(201);
-  res.end(newTicket);
+  res.json(newTicket);
 });
 
 // Request the next ticket waiting in line
-waitingTicket.get('/nextTicket', function(req, res, next) {
+app.get('/waitingTicket/nextTicket', function(req, res, next) {
   var nextTicket = null;
   
   var storedTicketsCount = waitingTickets.length;
   
   for (var i = 0; i < storedTicketsCount; ++i) {
-    if (!waitingTicket[i].deskNumber) {
-      nextTicket = waitingTicket[i];
+    if (!waitingTickets[i].deskNumber) {
+      nextTicket = waitingTickets[i];
       nextTicket.id = i;
       break;
     }
@@ -54,15 +59,47 @@ waitingTicket.get('/nextTicket', function(req, res, next) {
   
   if (nextTicket) {
     res.status(200);
-    res.end(nextTicket);
+    res.json(nextTicket);
   } else {
     res.status(404);
+    res.end();
   }
 });
 
-app.use('/waitingTicket', waitingTicket);
-
-
+// Take a ticket into process
+app.put('/waitingTicket/:ticketId/takeIntoProcess', function(req, res, next) {
+  if (typeof req.params.ticketId == 'undefined') {
+    res.status(400);
+    res.end();
+    return;
+  }
+  
+  if (typeof req.query.deskNumber == 'undefined') {
+    res.status(400);
+    res.end();
+    return;
+  }
+  
+  var ticketId = req.params.ticketId;
+  var deskNumber = req.query.deskNumber;
+  var ticketData = waitingTickets[ticketId];
+  
+  if (typeof ticketData == 'undefined') {
+    res.status(404);
+    res.end();
+    return;
+  }
+  
+  if (ticketData.deskNumber != 0) {
+    res.status(409);
+    res.end();
+    return;
+  }
+  
+  waitingTickets[ticketId]['deskNumber'] = deskNumber;
+  res.status(200);
+  res.end();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -72,27 +109,8 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
 });
 
 

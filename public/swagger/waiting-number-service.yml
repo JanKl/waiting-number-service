@@ -3,7 +3,7 @@ info:
   title: Waiting number service
   description: Manage your waiting numbers
   version: "1.0.0"
-host: localhost
+host: localhost:3000
 schemes:
   - http
 basePath: /
@@ -60,6 +60,8 @@ paths:
       responses:
         200:
           description: Ticket taken sucessfully
+        400:
+          description: Parameters missing
         404:
           description: Ticket not found
         409:
