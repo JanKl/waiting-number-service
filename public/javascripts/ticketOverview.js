@@ -1,5 +1,5 @@
 function updateOverviewBoard() {
-  $.getJSON('/waitingTicket', function done(allWaitingTickets) {
+  $.getJSON('/waitingTicket', function success(allWaitingTickets) {
     $('#waitingTicketsTable tbody').empty();
     
     var allWaitingTicketsCount = allWaitingTickets.length;

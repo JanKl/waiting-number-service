@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Get next open Ticket</title>
-	</head>
-
-	<body>
-		<p>
-			Input your desk number to get a new customer assigned.
-			</p>
-
-			<p>
-				<form>
-					Desk number:<br>
-						<input type="number" id="deskNumber" name="deskNumber">
-							<br>
-								<input type="submit" value="next Customer">
-				</form> 
-			</p>
-
-			<p>
-				The ID of your next customer is: <span id="nextTicketNumber"/>
-			</p>
-	</body>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Get next open Ticket</title>
+        <script src="javascripts/jquery-2.2.3.min.js"></script>
+        <script src="javascripts/ticketCommon.js"></script>
+        <script src="javascripts/ticketNext.js"></script>
+    </head>
+    <body>
+        <p>Input your desk number to get a new customer assigned.</p>
+            <form id="nextCustomerForm">
+                <div class="form-group">
+                    <label for="deskNumber">Your desk's number:</label>
+                    <input type="number" id="deskNumber" min="1">
+                </div>
+                <div class="form-group">
+                    <input type="submit" id="nextCustomerButton" value="next customer">
+                </div>
+            </form> 
+            <p>
+                The number of your next customer is: <span id="nextTicketNumber" class="text-primary">(no customer assigned)</span>
+            </p>
+    </body>
 
 </html>
-						

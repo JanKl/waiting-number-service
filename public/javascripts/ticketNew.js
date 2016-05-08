@@ -1,5 +1,5 @@
 function pullTicket() {
-  $.getJSON('/waitingTicket/newTicket', function done(newWaitingTicket) {
+  $.getJSON('/waitingTicket/newTicket', function success(newWaitingTicket) {
     $('#newTicketNumber').text(newWaitingTicket.callNumber);
     $('#pullTicketButton').removeClass('disabled');
   });
