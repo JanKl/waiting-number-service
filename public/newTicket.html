@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Create new ticket</title>
-	</head>
-
-	<body>
-		<p>
-			Click the button to get a new ticketNumber.
-		</p>
-
-		<p>
-			<button id="pullTicket" type="button">Pull ticket</button>
-		</p>
-
-		<p>
-			Your new ticketNumber is: <span id="newTicketNumber"/>
-		</p>
-
-	</body>
-
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Create new ticket</title>
+        <script src="javascripts/jquery-2.2.3.min.js"></script>
+        <script src="javascripts/ticketCommon.js"></script>
+        <script src="javascripts/ticketNew.js"></script>
+    </head>
+    <body>
+        <p>Click the button to get a new waiting ticket.</p>
+        <button id="pullTicketButton" type="button" class="btn btn-primary btn-lg">Pull ticket</button>
+        <p>
+            The number of your ticket is: <span id="newTicketNumber" class="text-primary">(Please pull a ticket to get a number)</span>
+        </p>
+    </body>
 </html>
