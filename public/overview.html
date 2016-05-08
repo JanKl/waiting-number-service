@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Overview</title>
-	</head>
-
-	<body>
-		<p>
-			This site shows the status of the ticketnumbers.
-		</p>
-
-		<table>
-			<tr> 
-				<td>
-					<b>ticketnumber</b>
-				</td>
-				<td>
-					<b>deskNumber</b>
-				</td>
-			</tr>
-			<tr> 
-				<td>x</td>
-				<td>y</td>
-			</tr>
-		</table>
-
-
-	</body>
-
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Overview</title>
+        <script src="javascripts/jquery-2.2.3.min.js"></script>
+        <script src="javascripts/ticketCommon.js"></script>
+        <script src="javascripts/ticketOverview.js"></script>
+    </head>
+    <body>
+        <p>
+            This site shows the status of the tickets.
+        </p>
+        <table id="waitingTicketsTable" class="table table-striped">
+            <thead>
+                <tr> 
+                    <th>ticket number</th>
+                    <th>desk number</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </body>
 </html>
