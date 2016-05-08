@@ -53,7 +53,27 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /waitingTicket/{ticketId}/takeIntoProcess:
+    put:
+      summary: Take a given waiting ticket into process
+      description: Takes a waiting ticket identified by the id into process by the provided desk. Only works, if the ticket wasn't processed already.
+      responses:
+        200:
+          description: Ticket taken sucessfully
+        404:
+          description: Ticket not found
+        409:
+          description: Ticket already in process
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
       parameters:
+        - name: ticketId
+          in: path
+          description: The id of the waiting ticket
+          required: true
+          type: string
         - name: deskNumber
           in: query
           description: Your desk's number
